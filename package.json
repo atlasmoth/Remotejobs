@@ -11,9 +11,11 @@
   "dependencies": {
     "@stripe/react-stripe-js": "^1.4.1",
     "@stripe/stripe-js": "^1.16.0",
+    "@uiw/react-md-editor": "^3.4.10",
     "axios": "^0.21.1",
     "mongodb": "^4.0.1",
     "next": "11.0.1",
+    "next-connect": "^0.10.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "stripe": "^8.165.0"
