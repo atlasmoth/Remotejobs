@@ -45,9 +45,7 @@ small {
   border-radius: 10px;
   cursor: pointer;
 }
-.btn:hover,
-.btn:focus,
-.btn:active {
+.btn:hover {
   background-color: var(--white);
   color: var(--primary-red);
 }
@@ -78,6 +76,9 @@ small {
 label > span {
   text-transform: uppercase;
   font-weight: bold;
+  margin-bottom: 1rem;
+
+  display: inline-block;
 }
 .form-body label {
   margin: 1rem 0px;
@@ -95,4 +96,7 @@ select {
   border-radius: 10px;
   outline: none;
   border: 1px solid var(--grey);
+}
+.btn[type="submit"] {
+  padding: 1.5rem;
 }

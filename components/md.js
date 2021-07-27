@@ -7,15 +7,13 @@ import "react-markdown-editor-lite/lib/index.css";
 
 const mdParser = new MarkdownIt();
 
-function handleEditorChange({ html, text }) {
-  console.log("handleEditorChange", html, text);
-}
 export default function Md(props) {
   return (
     <MdEditor
       style={{ height: "30vh" }}
       renderHTML={(text) => mdParser.render(text)}
-      onChange={handleEditorChange}
+      view={{ menu: true, md: true, html: false }}
+      name={props.name}
     />
   );
 }
