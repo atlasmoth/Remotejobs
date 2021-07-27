@@ -96,6 +96,3 @@ select {
   outline: none;
   border: 1px solid var(--grey);
 }
-input[type="range"] {
-  color: var(--primary-red);
-}
