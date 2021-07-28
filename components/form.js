@@ -63,7 +63,7 @@ export default function Form() {
     fetch("/api/jobs", {
       method: "POST",
       headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
       body: formData,
     })
@@ -72,7 +72,7 @@ export default function Form() {
       .catch(console.log);
   };
   return (
-    <form onSubmit={handleSubmit} encType="multipart/form-data">
+    <form onSubmit={handleSubmit} encType="multipart/form-data;charset=UTF-8">
       <div className="form-body">
         <div>
           <label htmlFor="company">
