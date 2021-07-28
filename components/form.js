@@ -1,5 +1,4 @@
 import Md from "./md";
-import axios from "axios";
 
 const options = [
   {
@@ -60,19 +59,20 @@ export default function Form() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = Object.fromEntries(new FormData(e.target));
+    console.log(formData);
     fetch("/api/jobs", {
       method: "POST",
       headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/json",
       },
-      body: formData,
+      body: JSON.stringify(formData),
     })
       .then((res) => res.json())
       .then(console.log)
       .catch(console.log);
   };
   return (
-    <form onSubmit={handleSubmit} encType="multipart/form-data;charset=UTF-8">
+    <form onSubmit={handleSubmit} encType="multipart/form-data">
       <div className="form-body">
         <div>
           <label htmlFor="company">
