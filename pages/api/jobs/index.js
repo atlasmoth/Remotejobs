@@ -1,4 +1,7 @@
 import nc from "next-connect";
+import { connectToDatabase } from "./../../../utils/db";
+import stripeInit from "stripe";
+const stripe = stripeInit(process.env.PRIVATE_STRIPE);
 
 const handler = nc({ attachParams: true });
 
@@ -9,15 +12,71 @@ async function getJobs(req, res) {
   }
 }
 async function createJob(req, res) {
-  console.log(req.body);
-  res.send({ success: true, message: "this works son" });
+  const {
+    company,
+    position,
+    primaryTag,
+    otherTags,
+    location,
+    min,
+    max,
+    description,
+    apply,
+    applyUrl,
+    color,
+  } = req.body;
+  var date = new Date();
+  date.setDate(date.getDate() + 30);
+  date.setUTCHours(0, 0, 0, 0);
+  const today = new Date();
+  today.setUTCHours(0, 0, 0, 0);
+
   try {
+    const { db } = await connectToDatabase();
+    const tempDoc = await db.collection("jobs").insertOne({
+      company,
+      position,
+      primaryTag,
+      otherTags,
+      location,
+      min: Number(min),
+      max: Number(max),
+      description,
+      apply,
+      applyUrl,
+      color,
+      expiration: date.getTime(),
+      date: today.getTime(),
+    });
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: `${position} @ ${company} @${location}`,
+              images: [
+                `https://images.unsplash.com/photo-1586227740560-8cf2732c1531?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=828&q=80`,
+              ],
+              metadata: {},
+            },
+            unit_amount: 50000,
+          },
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+      success_url: "http://localhost:3000/checkout?id=" + tempDoc.insertedId,
+      cancel_url: "http://localhost:3000/checkout",
+    });
+    res.json({ id: session.id });
   } catch (error) {
     console.log(error);
     res.status(400).send({ success: false, error: error.message });
   }
 }
 
-handler.get(getJobs).post(upload.single("logo"), createJob);
+handler.get(getJobs).post(createJob);
 
 export default handler;

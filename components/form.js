@@ -1,4 +1,5 @@
 import Md from "./md";
+import { loadStripe } from "@stripe/stripe-js";
 
 const options = [
   {
@@ -55,11 +56,13 @@ const options = [
   },
 ];
 
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_PUBLIC_STRIPE);
+
 export default function Form() {
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = Object.fromEntries(new FormData(e.target));
-    console.log(formData);
+    const stripe = await stripePromise;
     fetch("/api/jobs", {
       method: "POST",
       headers: {
@@ -68,7 +71,15 @@ export default function Form() {
       body: JSON.stringify(formData),
     })
       .then((res) => res.json())
-      .then(console.log)
+      .then(async (session) => {
+        const result = await stripe.redirectToCheckout({
+          sessionId: session.id,
+        });
+
+        if (result.error) {
+          console.log(errror);
+        }
+      })
       .catch(console.log);
   };
   return (
@@ -141,16 +152,11 @@ export default function Form() {
           </label>
         </div>
         <div>
-          <label htmlFor="url">
-            <span>Company logo</span>
+          <label htmlFor="color">
+            <span>Company Theme</span>
             <div>
               <div className="file">
-                <input
-                  type="file"
-                  name="url"
-                  id="url"
-                  accept="image/png, image/jpeg"
-                />
+                <input type="color" name="color" id="color" />
               </div>
             </div>
           </label>
