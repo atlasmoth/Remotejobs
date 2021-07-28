@@ -19,7 +19,6 @@ export async function getServerSideProps(ctx) {
         },
       };
     } catch (error) {
-      console.log(error);
       return {
         redirect: {
           destination: "/",
