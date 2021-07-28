@@ -63,7 +63,7 @@ export default function Form() {
     fetch("/api/jobs", {
       method: "POST",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "multipart/form-data",
       },
       body: formData,
     })
