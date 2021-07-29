@@ -414,7 +414,7 @@ const allTags = {
 };
 import { useEffect, useState } from "react";
 import styles from "./home.module.css";
-export default function Search() {
+export default function Search({ setSearchTerms }) {
   const [val, setVal] = useState("");
   const [display, setDisplay] = useState(false);
   const [keywords, setKeywords] = useState([]);

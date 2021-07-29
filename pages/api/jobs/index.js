@@ -6,8 +6,30 @@ const stripe = stripeInit(process.env.PRIVATE_STRIPE);
 const handler = nc({ attachParams: true });
 
 async function getJobs(req, res) {
+  const { query, page } = req.query;
+  console.log(page);
+  console.log(query);
   try {
+    const { db } = await connectToDatabase();
+    const docs = await db
+      .collection("jobs")
+      .aggregate([
+        {
+          $search: {
+            text: {
+              path: { wildcard: "*" },
+              query: "remote",
+            },
+          },
+        },
+        {
+          $limit: 20,
+        },
+      ])
+      .toArray();
+    res.send({ success: true, docs });
   } catch (error) {
+    console.log(error);
     res.status(400).send({ success: false, error: error.message });
   }
 }
