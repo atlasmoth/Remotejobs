@@ -9,6 +9,7 @@ export default function HomeComponent() {
   useEffect(() => {
     console.log(searchTerms);
   }, [searchTerms]);
+
   return (
     <queryContext.Provider value={{ searchTerms, setSearchTerms }}>
       <div className={styles.home}>

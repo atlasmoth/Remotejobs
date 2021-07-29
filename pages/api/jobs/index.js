@@ -6,35 +6,29 @@ const stripe = stripeInit(process.env.PRIVATE_STRIPE);
 const handler = nc({ attachParams: true });
 
 async function getJobs(req, res) {
-  const { query, page } = req.query;
+  const { page, terms } = req.query;
 
+  const aggregate = [
+    {
+      $limit: 20,
+    },
+    {
+      $skip: Number(page) * 20,
+    },
+  ];
+  if (terms) {
+    aggregate.unshift({
+      $search: {
+        text: {
+          path: ["company", "position", "primaryTag", "otherTags", "location"],
+          query: terms,
+        },
+      },
+    });
+  }
   try {
     const { db } = await connectToDatabase();
-    const docs = await db
-      .collection("jobs")
-      .aggregate([
-        {
-          $search: {
-            text: {
-              path: [
-                "company",
-                "position",
-                "primaryTag",
-                "otherTags",
-                "location",
-              ],
-              query: JSON.parse(query),
-            },
-          },
-        },
-        {
-          $limit: 20,
-        },
-        {
-          $skip: Number(page) * 20,
-        },
-      ])
-      .toArray();
+    const docs = await db.collection("jobs").aggregate(aggregate).toArray();
 
     res.send({ success: true, docs });
   } catch (error) {

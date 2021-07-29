@@ -6,9 +6,7 @@ export default function Joblist() {
   const { searchTerms } = useQuery();
   const [jobs, setJobs] = useState([]);
   const [pageNum, setPageNum] = useState(0);
-  const [currId, setCurrId] = useState();
 
-  const getCurr = (key) => key === currId;
   const sentinelRef = useRef();
 
   useEffect(() => {
@@ -31,9 +29,14 @@ export default function Joblist() {
   }, [searchTerms]);
 
   useEffect(() => {
-    fetch(`/api/jobs/?query=${JSON.stringify(searchTerms)}&page=${pageNum}`)
+    const terms = searchTerms.reduce((acc, curr) => {
+      return acc + `&terms=${curr}`;
+    }, ``);
+
+    fetch(`/api/jobs?page=${pageNum}${terms}`)
       .then((res) => res.json())
-      .then(({ docs }) => setJobs((j) => [...j, ...docs]));
+      .then(({ docs }) => setJobs((j) => [...j, ...docs]))
+      .catch((err) => console.log(err));
   }, [pageNum]);
 
   return (
@@ -47,15 +50,7 @@ export default function Joblist() {
                 style["marginBottom"] = "150px";
               }
 
-              return (
-                <JobItem
-                  j={j}
-                  style={style}
-                  key={j._id}
-                  getCurr={getCurr}
-                  setCurrId={setCurrId}
-                />
-              );
+              return <JobItem j={j} style={style} key={j._id} />;
             })}
           </div>
         </div>

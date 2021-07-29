@@ -1,8 +1,9 @@
 import Markdown from "react-markdown";
-
-export default function JobItem({ j, style, getCurr, setCurrId }) {
+import { useQuery } from "./../contexts/query";
+export default function JobItem({ j, style }) {
+  const ctx = useQuery();
   return (
-    <div style={style} onClick={(e) => setCurrId(j._id)}>
+    <div style={style}>
       <div>
         <div>
           <div>
@@ -32,37 +33,32 @@ export default function JobItem({ j, style, getCurr, setCurrId }) {
         </div>
         <div>
           <div>
-            {j.otherTags.map((bt) => (
-              <button
-                className="button is-light"
-                key={Math.random() * Math.random()}
-              >
-                {bt}
-              </button>
-            ))}
-            {getCurr(j._id) && (
-              <a
-                className="button is-primary"
-                href={j.applyUrl}
-                target="_blank"
-              >
-                Apply
-              </a>
-            )}
-          </div>
-        </div>
-      </div>
-      {getCurr(j._id) && (
-        <div>
-          <Markdown children={`${j.description}`} />
-
-          <div>
-            <a href={j.applyUrl} target="_blank">
+            {j.otherTags &&
+              j.otherTags.map((bt, index) => (
+                <button
+                  className="button is-light"
+                  key={index * Math.random() * Date.now()}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => ctx.setSearchTerms((s) => [...s, bt])}
+                >
+                  {bt}
+                </button>
+              ))}
+            <a className="button is-primary" href={j.applyUrl} target="_blank">
               Apply
             </a>
           </div>
         </div>
-      )}
+      </div>
+      <div>
+        <Markdown children={`${j.description}`} />
+
+        <div>
+          <a href={j.applyUrl} target="_blank">
+            Apply
+          </a>
+        </div>
+      </div>
     </div>
   );
 }
