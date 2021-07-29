@@ -22,11 +22,14 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
-.search {
+.main > div {
   display: inline-block;
   background-color: #fff;
   padding: 1rem;
+}
+.search {
   margin-bottom: 2rem;
   margin-top: 1rem;
   border-radius: 30px;
@@ -46,4 +49,10 @@
   background-color: transparent;
   font-weight: bold;
   font-size: 1.5rem;
+}
+.searchOptions {
+  border-radius: 10px;
+  color: #000;
+  position: absolute;
+  top: 100%;
 }
