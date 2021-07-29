@@ -38,7 +38,7 @@ export default function Joblist() {
 
   return (
     <>
-      <section>
+      <section className="joblist">
         <div>
           <div>
             {jobs.map((j, index) => {

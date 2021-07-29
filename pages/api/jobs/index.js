@@ -7,8 +7,7 @@ const handler = nc({ attachParams: true });
 
 async function getJobs(req, res) {
   const { query, page } = req.query;
-  console.log(page);
-  console.log(query);
+
   try {
     const { db } = await connectToDatabase();
     const docs = await db
@@ -17,16 +16,26 @@ async function getJobs(req, res) {
         {
           $search: {
             text: {
-              path: { wildcard: "*" },
-              query: "remote",
+              path: [
+                "company",
+                "position",
+                "primaryTag",
+                "otherTags",
+                "location",
+              ],
+              query: JSON.parse(query),
             },
           },
         },
         {
           $limit: 20,
         },
+        {
+          $skip: Number(page) * 20,
+        },
       ])
       .toArray();
+
     res.send({ success: true, docs });
   } catch (error) {
     console.log(error);

@@ -439,7 +439,6 @@ export default function Search({ setSearchTerms }) {
             value={val}
             onChange={(e) => setVal(e.target.value)}
             onFocus={() => setDisplay(true)}
-            onBlur={() => setDisplay(false)}
           />
         </span>
       </div>
@@ -453,6 +452,10 @@ export default function Search({ setSearchTerms }) {
                   borderBottom: "1px solid #eee",
                   padding: "10px 0px",
                   cursor: "pointer",
+                }}
+                onClick={() => {
+                  setSearchTerms([prop]);
+                  setDisplay(false);
                 }}
               >
                 {val}

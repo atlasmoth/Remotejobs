@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./home.module.css";
 import Search from "./search";
 import { queryContext } from "./../contexts/query";
 import Joblist from "./joblist";
 
 export default function HomeComponent() {
-  const [searchTerms, setSerchTerms] = useState([]);
-
+  const [searchTerms, setSearchTerms] = useState([]);
+  useEffect(() => {
+    console.log(searchTerms);
+  }, [searchTerms]);
   return (
-    <queryContext.Provider value={{ searchTerms, setSerchTerms }}>
+    <queryContext.Provider value={{ searchTerms, setSearchTerms }}>
       <div className={styles.home}>
         <header className={styles.header}>
           <div className="banner">
@@ -26,7 +28,7 @@ export default function HomeComponent() {
             </div>
           </div>
           <div className={styles.main}>
-            <Search setSerchTerms={setSerchTerms} />
+            <Search setSearchTerms={setSearchTerms} />
           </div>
         </header>
         <Joblist />
