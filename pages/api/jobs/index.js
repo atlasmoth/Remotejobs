@@ -12,10 +12,16 @@ async function getJobs(req, res) {
     {
       $match: {
         $and: [
-          { company: { $exists: true } },
-          { description: { $exists: true } },
-          { position: { $exists: true } },
+          { company: { $gt: "" } },
+          { description: { $gt: "" } },
+          { position: { $gt: "" } },
+          { min: { $exists: true } },
         ],
+      },
+    },
+    {
+      $sort: {
+        date: -1,
       },
     },
     {
@@ -73,7 +79,7 @@ async function createJob(req, res) {
       company,
       position,
       primaryTag,
-      otherTags,
+      otherTags: otherTags.split(","),
       location,
       min: Number(min),
       max: Number(max),
@@ -97,7 +103,7 @@ async function createJob(req, res) {
               ],
               metadata: {},
             },
-            unit_amount: 50000,
+            unit_amount: 59700,
           },
           quantity: 1,
         },

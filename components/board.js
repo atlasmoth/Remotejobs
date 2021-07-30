@@ -1,13 +1,18 @@
 import Form from "./form";
+import Link from "next/link";
 
 export default function Board() {
   return (
     <div className="board">
       <div className="banner">
         <div>
-          <h1>RemoteOk</h1>
+          <h1>
+            <Link href="/">
+              <a>RemoteOk</a>
+            </Link>
+          </h1>
         </div>
-        <div>
+        <div className="remotely">
           <h2>Hire Remotely</h2>
         </div>
         <div>

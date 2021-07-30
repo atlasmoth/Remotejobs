@@ -439,12 +439,17 @@ export default function Search({ setSearchTerms }) {
             value={val}
             onChange={(e) => setVal(e.target.value)}
             onFocus={() => setDisplay(true)}
+            onBlur={(e) => {
+              setTimeout(() => {
+                setDisplay(false);
+              }, 500);
+            }}
           />
         </span>
       </div>
       {display && (
         <div className={styles.searchOptions}>
-          {keywords.map(([prop, val], index) => {
+          {keywords.map(([prop, val]) => {
             return (
               <div
                 key={prop}
