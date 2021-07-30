@@ -45,7 +45,7 @@ export default function Joblist() {
         <div>
           <div>
             {jobs.map((j, index) => {
-              let style = { cursor: "pointer" };
+              let style = {};
               if (jobs.length - index === 1) {
                 style["marginBottom"] = "150px";
               }

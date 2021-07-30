@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styles from "./home.module.css";
+import styles from "./../styles/home.module.css";
 import Search from "./search";
 import { queryContext } from "./../contexts/query";
 import Joblist from "./joblist";
