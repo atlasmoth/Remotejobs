@@ -109,8 +109,8 @@ async function createJob(req, res) {
         },
       ],
       mode: "payment",
-      success_url: "http://localhost:3000/checkout?id=" + tempDoc.insertedId,
-      cancel_url: "http://localhost:3000/checkout",
+      success_url: process.env.STRIPE_URL + "?id=" + tempDoc.insertedId,
+      cancel_url: process.env.STRIPE_URL,
     });
     res.json({ id: session.id });
   } catch (error) {
