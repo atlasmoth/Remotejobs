@@ -9,15 +9,10 @@ import Tags from "./tags";
 export default function HomeComponent() {
   const [searchTerms, setSearchTerms] = useState([]);
   const updateSearchTerms = (text) => {
-    console.log(
-      searchTerms
-        .map((s) => s.toLowerCase().trim())
-        .includes(text.toLowerCase().trim())
-    );
-    if (!searchTerms.find(text)) {
-      console.log(searchTerms, text);
-      setSearchTerms((s) => [...s, text]);
-    }
+    setSearchTerms((s) => [...new Set([...s, text])]);
+  };
+  const removeTag = (text) => {
+    setSearchTerms((s) => [...s.filter((i) => i !== text)]);
   };
   return (
     <queryContext.Provider
@@ -51,7 +46,7 @@ export default function HomeComponent() {
             <Search setSearchTerms={setSearchTerms} />
           </div>
         </header>
-        <Tags terms={searchTerms} />
+        <Tags terms={searchTerms} removeTag={removeTag} />
         <Joblist />
       </div>
     </queryContext.Provider>

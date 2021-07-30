@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "../contexts/query";
-import JobItem from "./JobItem";
+import JobItem from "./jobItem";
 
 export default function Joblist({}) {
   const { searchTerms } = useQuery();
