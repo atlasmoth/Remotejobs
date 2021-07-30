@@ -16,6 +16,7 @@ async function getJobs(req, res) {
           { description: { $gt: "" } },
           { position: { $gt: "" } },
           { min: { $exists: true } },
+          { paid: { $exists: true } },
         ],
       },
     },
@@ -90,6 +91,7 @@ async function createJob(req, res) {
       expiration: date.getTime(),
       date: today.getTime(),
     });
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [
@@ -101,7 +103,6 @@ async function createJob(req, res) {
               images: [
                 `https://images.unsplash.com/photo-1586227740560-8cf2732c1531?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=828&q=80`,
               ],
-              metadata: {},
             },
             unit_amount: 59700,
           },
