@@ -4,11 +4,8 @@ import Search from "./search";
 import { queryContext } from "./../contexts/query";
 import Joblist from "./joblist";
 
-export default function HomeComponent() {
+export default function HomeComponent({ docs }) {
   const [searchTerms, setSearchTerms] = useState([]);
-  useEffect(() => {
-    console.log(searchTerms);
-  }, [searchTerms]);
 
   return (
     <queryContext.Provider value={{ searchTerms, setSearchTerms }}>
@@ -32,7 +29,7 @@ export default function HomeComponent() {
             <Search setSearchTerms={setSearchTerms} />
           </div>
         </header>
-        <Joblist />
+        <Joblist docs={docs} />
       </div>
     </queryContext.Provider>
   );

@@ -10,12 +10,22 @@ async function getJobs(req, res) {
 
   const aggregate = [
     {
+      $match: {
+        $and: [
+          { company: { $exists: true } },
+          { description: { $exists: true } },
+          { position: { $exists: true } },
+        ],
+      },
+    },
+    {
       $limit: 20,
     },
     {
-      $skip: Number(page) * 20,
+      $skip: Number(page || 0) * 20,
     },
   ];
+
   if (terms) {
     aggregate.unshift({
       $search: {
@@ -26,6 +36,7 @@ async function getJobs(req, res) {
       },
     });
   }
+
   try {
     const { db } = await connectToDatabase();
     const docs = await db.collection("jobs").aggregate(aggregate).toArray();

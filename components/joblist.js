@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { useQuery } from "../contexts/query";
 import JobItem from "./JobItem";
 
-export default function Joblist() {
+export default function Joblist({ docs }) {
   const { searchTerms } = useQuery();
-  const [jobs, setJobs] = useState([]);
-  const [pageNum, setPageNum] = useState(0);
+  const [jobs, setJobs] = useState([...docs]);
+  const [pageNum, setPageNum] = useState(1);
 
   const sentinelRef = useRef();
 

@@ -55,7 +55,7 @@ small {
   }
   .header-apply,
   .header-buttons {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -165,4 +165,10 @@ button.location {
   border: none;
   margin-right: 10px;
   padding: 5px;
+}
+.description {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 1rem 0px 1.5rem 0px;
 }
