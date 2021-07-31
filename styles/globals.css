@@ -118,6 +118,7 @@ select {
 .joblist {
   max-width: 960px;
   margin: 0 auto;
+  padding: 0px 10px;
 }
 .jobItem {
   background-color: #fff;
