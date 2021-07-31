@@ -55,7 +55,10 @@ const options = [
     value: "other",
   },
 ];
-
+const levels = [];
+for (let x = 0; x < 200000; x += 10000) {
+  levels.push(x);
+}
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_PUBLIC_STRIPE);
 
 export default function Form() {
@@ -165,14 +168,13 @@ export default function Form() {
           <label htmlFor="min">
             <span>Minimum Salary (in USD)</span>
             <div>
-              <input
-                type="range"
-                name="min"
-                id="min"
-                min="0"
-                max="200000"
-                step="10000"
-              />
+              <select name="min" id="min">
+                {levels.map((l) => (
+                  <option value={l} key={"min-" + l}>
+                    {l}
+                  </option>
+                ))}
+              </select>
             </div>
           </label>
         </div>
@@ -180,14 +182,13 @@ export default function Form() {
           <label htmlFor="max">
             <span>Maximum salary (in USD)</span>
             <div>
-              <input
-                type="range"
-                name="max"
-                id="max"
-                min="0"
-                max="200000"
-                step="10000"
-              />
+              <select name="max" id="max">
+                {levels.map((l) => (
+                  <option value={l} key={"min-" + l}>
+                    {l}
+                  </option>
+                ))}
+              </select>
             </div>
           </label>
         </div>
