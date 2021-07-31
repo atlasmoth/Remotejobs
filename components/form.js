@@ -184,7 +184,7 @@ export default function Form() {
             <div>
               <select name="max" id="max">
                 {levels.map((l) => (
-                  <option value={l} key={"min-" + l}>
+                  <option value={l} key={"max-" + l}>
                     {l}
                   </option>
                 ))}
