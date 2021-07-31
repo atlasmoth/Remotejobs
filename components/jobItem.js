@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Markdown from "react-markdown";
 import { useQuery } from "./../contexts/query";
+import Link from "next/link";
+
 export default function JobItem({ j, style }) {
   const ctx = useQuery();
   const [showMarkdown, setShowMarkdown] = useState(false);
@@ -47,9 +49,13 @@ export default function JobItem({ j, style }) {
               </button>
             ))}
         </div>
-        <div className="header-tag">📌 10d</div>
+
         <div className="header-apply">
-          <button className="btn">Apply</button>
+          <button className="btn">
+            <a target="_blank" href={j.applyUrl}>
+              Apply
+            </a>
+          </button>
         </div>
       </div>
 
