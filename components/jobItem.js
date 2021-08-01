@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Markdown from "react-markdown";
 import { useQuery } from "./../contexts/query";
-import Link from "next/link";
 
 export default function JobItem({ j, style }) {
   const ctx = useQuery();
@@ -69,6 +68,7 @@ export default function JobItem({ j, style }) {
           }}
         >
           <Markdown children={`${j.description}`} />
+          <Markdown children={`${j.apply}`} />
           <h1>Location</h1>
           <p>{j.location}</p>
           <div className="apply">

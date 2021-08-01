@@ -39,6 +39,10 @@ async function getJobs(req, res) {
         text: {
           path: ["company", "position", "primaryTag", "otherTags", "location"],
           query: terms,
+          fuzzy: {
+            maxEdits: 2,
+            prefixLength: 3,
+          },
         },
       },
     });
